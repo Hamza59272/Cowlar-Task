@@ -7,12 +7,17 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var cors = require('cors')
+const {
+    connectRoute
+} = require("./Router/index");
 
-
-const uri = process.env.DATABASE_URL || "mongodb://localhost:27017/FinalYearProject";
+const uri = process.env.DATABASE_URL || "mongodb://localhost:27017/Cowlar_Task";
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => {
+    mongoose.connection.useDb('Cowlar_Task');
+    console.log('Connected to MongoDB')
+})
   .catch((err) => console.log('Error connecting to MongoDB:', err));
 
 var app = express();
