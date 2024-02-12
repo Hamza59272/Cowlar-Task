@@ -69,22 +69,40 @@ const movieService = {
   },
   getMovieDetails: async (movieId) => {
     try {
-      const movieDetails = await Movie.findById(movieId)
-        .populate({
-          path: 'createdBy',
-          select: 'username email', // Select the fields you want to populate
-        })
-        .populate('reviews'); // Populate the reviews dynamically
+      
+      const movieDetails = await Movie.findById(movieId).lean().populate('createdBy', 'username email');
 
       if (!movieDetails) {
         throw new Error('Movie not found');
       }
 
-      return movieDetails;
+      const reviews = await Review.find({ movie: movieId }).populate('createdBy', 'username email');
+
+     const details = {
+      reviews: reviews.map(review => ({
+        _id: review._id,
+        content: review.content,
+        rating: review.rating,
+        createdBy: review.createdBy,
+        movie: review.movie
+      })),
+      movieDetails: {
+        _id: movieDetails._id,
+        title: movieDetails.title,
+        description: movieDetails.description,
+        imageUrl: movieDetails.imageUrl,
+        videoLink: movieDetails.videoLink,
+        createdBy: movieDetails.createdBy
+      }
+     }
+
+      return details;
     } catch (error) {
       throw new Error(error.message);
     }
   },
+  
+  
 };
 
 module.exports = movieService;

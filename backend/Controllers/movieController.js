@@ -48,9 +48,9 @@ const movieController = {
       const movieId = req.params.movieId;
 
       // Call the movieDetailsService to get movie details
-      const movieDetails = await movieService.getMovieDetails(movieId);
+      const ViewOneDetail = await movieService.getMovieDetails(movieId);
 
-      return res.status(200).json({ success:true, movieDetails });
+      return res.status(200).json({ success:true, ViewOneDetail });
     } catch (error) {
       return res.status(404).json({ success:false, message: 'Not Found', error: error.message });
     }
