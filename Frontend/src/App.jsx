@@ -1,10 +1,13 @@
-
+import React,{lazy,Suspense,Fragment} from 'react';
+const Router = lazy(()=> import('./Routes/router'))
 function App() {
 
   return (
-    <>
-      <h1>Hello WOrld</h1>
-    </>
+    <Suspense fallback={<div>loading...</div>}>  
+          <Fragment>
+          <Router />
+         </Fragment>
+    </Suspense>
   )
 }
 
