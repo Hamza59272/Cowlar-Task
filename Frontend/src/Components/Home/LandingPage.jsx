@@ -6,7 +6,38 @@ import HomeBg from '../../assets/homeBg.png'
 export default function LandingPage() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [loading, setLoading] = useState(true)
+
     const theme = useTheme()
+
+    useEffect(() => {
+
+        const user = localStorage.getItem('User')
+        if (user !== null) setIsLoggedIn(true)
+        setLoading(false)
+
+
+    }, [])
+
+    if (loading)
+        return (
+            <Box sx={{
+                display: 'flex',
+                backgroundColor: theme.palette.primary.background,
+                flexDirection: 'column',
+                minHeight:'100vh',
+                justifyContent:'center',
+                alignItems:'center'
+            }}>
+                <Typography
+                    variant="h4"
+                    align="center"
+                    color="primary">
+                    Loading....
+                </Typography>
+
+            </Box>
+        )
 
     return (
         <Fragment>
@@ -14,17 +45,21 @@ export default function LandingPage() {
                 <Box sx={{
                     display: 'flex',
                     backgroundColor: theme.palette.primary.background,
-                    flexDirection:'column'
+                    flexDirection: 'column'
                 }}>
                     <Box sx={{
                         backgroundImage: `url(${HomeBg})`,
                         backgroundSize: 'cover',
-                       
-                        width: '100%'
+                        width: '100%',
+                        minHeight: '100vh',
+                        alignItems: 'center'
                     }}>
                         <Box>
+
+                        </Box>
+                        <Box >
                             <Typography
-                                variant="h3"
+                                variant="h4"
                                 align="center"
                                 color="primary"
                             >
